@@ -2,7 +2,25 @@
 import 'source-map-support/register';
 import cdk = require('@aws-cdk/cdk');
 import { CdkDeliveryDemoStack } from '../lib/cdk-delivery-demo-stack';
+import { ApplicationPipelineStack } from '../lib/app-delivery/application-pipeline';
+import { DeployStackAction } from '../lib/app-delivery/deploy-stack-action';
 
 const app = new cdk.App();
-new CdkDeliveryDemoStack(app, 'CdkDeliveryDemoStack');
+
+new ApplicationPipelineStack(app, 'cdk-delivery-demo-application-pipeline', {
+  bootstrap: 'cdk-delivery-demo',
+  stages: [
+    {
+      name: 'Deploy',
+      actions: [
+        new DeployStackAction({
+          stack: new CdkDeliveryDemoStack(app, 'CdkDeliveryDemoStack'),
+          admin: true
+        })
+      ]
+    }
+  ]
+});
+
+
 app.run();

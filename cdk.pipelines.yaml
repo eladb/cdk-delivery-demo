@@ -1,3 +1,5 @@
 cdk-delivery-demo:
   source: https://github.com/eladb/cdk-delivery-demo
   oauthSecret: arn:aws:secretsmanager:us-east-1:585695036304:secret:github-token-B5IVBl
+  stacks:
+    - cdk-delivery-demo-application-pipeline
