@@ -19,6 +19,11 @@ export interface DeployStackActionProps {
    * the `project.role`.
    */
   admin: boolean;
+
+  /**
+   * Execution order within the stage.
+   */
+  runOrder?: number;
 }
 
 /**
@@ -39,6 +44,7 @@ export class DeployStackAction extends codepipeline_api.Action {
       provider: 'CodeBuild',
       artifactBounds: { minInputs: 1, maxInputs: 1, minOutputs: 0, maxOutputs: 0 },
       actionName: props.stack.name,
+      runOrder: props.runOrder
     });
 
     this.stackName = props.stack.name;

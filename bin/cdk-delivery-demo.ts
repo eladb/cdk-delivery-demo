@@ -12,17 +12,15 @@ const actions = new Array<DeployStackAction>();
 for (let i = 0; i < 5; ++i) {
   actions.push(new DeployStackAction({
     stack: new CdkDeliveryDemoStack(app, `CdkDeliveryDemoStack-${i}`),
-    admin: true
+    admin: true,
+    runOrder: i
   }));
 }
 
 new ApplicationPipelineStack(app, 'cdk-delivery-demo-application-pipeline', {
   bootstrap: 'cdk-delivery-demo',
   stages: [
-    {
-      name: 'Deploy',
-      actions
-    }
+    { name: 'Deploy', actions }
   ]
 });
 
